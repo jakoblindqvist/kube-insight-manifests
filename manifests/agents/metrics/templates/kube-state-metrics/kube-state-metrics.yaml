@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-state-metrics
+  namespace: {{ .Values.namespace }}
+  labels:
+    k8s-app: kube-state-metrics
+    kubernetes.io/cluster-service: "true"
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    k8s-app: kube-state-metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-state-metrics
+  namespace: {{ .Values.namespace }}
+  labels:
+    k8s-app: kube-state-metrics
+    kubernetes.io/cluster-service: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: kube-state-metrics
+  template:
+    metadata:
+      labels:
+        k8s-app: kube-state-metrics
+    spec:
+      serviceAccountName: kube-state-metrics
+      containers:
+      - name: kube-state-metrics
+        image: {{ .Values.kubeStateMetrics.image }}:{{ .Values.kubeStateMetrics.version }}
+        imagePullPolicy: {{ .Values.kubeStateMetrics.pullPolicy }}
+        ports:
+        - name: http-metrics
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        args:
+          - --port=8080
+          - --collectors=cronjobs,daemonsets,deployments,endpoints,horizontalpodautoscalers,jobs,limitranges,namespaces,nodes,persistentvolumeclaims,persistentvolumes,pods,replicasets,replicationcontrollers,resourcequotas,services,statefulsets
+        resources:
+          limits:
+            cpu: {{ .Values.kubeStateMetrics.cpuLimitMilliCores }}m
+            memory: {{ .Values.kubeStateMetrics.memLimitMB }}Mi
+          requests:
+            cpu: {{ .Values.kubeStateMetrics.cpuRequestMilliCores }}m
+            memory: {{ .Values.kubeStateMetrics.memRequestMB }}M
+      tolerations:
+      # allow scheduling onto master
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
