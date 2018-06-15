@@ -32,7 +32,7 @@ nodeExporter:
   cpuRequestMilliCores: 100
 
 prometheus:
-  version: v2.3.0
+  version: v2.1.0
   image: prom/prometheus
   pullPolicy: IfNotPresent
   memLimitMB: 800
