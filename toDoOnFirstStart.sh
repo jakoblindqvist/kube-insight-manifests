@@ -14,10 +14,10 @@ helm template install/kubernetes/helm/istio --name istio --namespace metrics --s
 cd ..
 
 # Get and generate kube-manifest-insight
-git clone git@github.com:jakoblindqvist/kube-insight-manifests.git
+git clone https://github.com/jakoblindqvist/kube-insight-manifests.git
 cd kube-insight-manifests
-helm template charts/agents --namespace metrics --set istioScrape.enabled=true > ../kube-learn-agent.yaml
-helm template charts/servers --namespace metrics > ../kube-learn-server.yaml
+helm template agents --namespace metrics --set istioScrape.enabled=true > ../kube-learn-agent.yaml
+helm template servers --namespace metrics > ../kube-learn-server.yaml
 
 cd ..
 
