@@ -1,0 +1,71 @@
+########## Istio scrape info
+
+      - job_name: 'istio-mesh'
+        # Override the global default and scrape targets from this job every 5 seconds.
+        scrape_interval: 5s
+
+        kubernetes_sd_configs:
+        - role: endpoints
+
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: metrics;istio-telemetry;prometheus
+
+      - job_name: 'envoy'
+        # Override the global default and scrape targets from this job every 5 seconds.
+        scrape_interval: 5s
+        # metrics_path defaults to '/metrics'
+        # scheme defaults to 'http'.
+
+        kubernetes_sd_configs:
+        - role: endpoints
+
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: metrics;istio-statsd-prom-bridge;statsd-prom
+
+      - job_name: 'istio-policy'
+        # Override the global default and scrape targets from this job every 5 seconds.
+        scrape_interval: 5s
+        # metrics_path defaults to '/metrics'
+        # scheme defaults to 'http'.
+
+        kubernetes_sd_configs:
+        - role: endpoints
+
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: metrics;istio-policy;http-monitoring
+
+      - job_name: 'istio-telemetry'
+        # Override the global default and scrape targets from this job every 5 seconds.
+        scrape_interval: 5s
+        # metrics_path defaults to '/metrics'
+        # scheme defaults to 'http'.
+
+        kubernetes_sd_configs:
+        - role: endpoints
+
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: metrics;istio-telemetry;http-monitoring
+
+      - job_name: 'pilot'
+        # Override the global default and scrape targets from this job every 5 seconds.
+        scrape_interval: 5s
+        # metrics_path defaults to '/metrics'
+        # scheme defaults to 'http'.
+
+        kubernetes_sd_configs:
+        - role: endpoints
+
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: metrics;istio-pilot;http-monitoring
+
+
