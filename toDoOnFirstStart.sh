@@ -16,13 +16,13 @@ cd ..
 # Get and generate kube-manifest-insight
 git clone git@github.com:jakoblindqvist/kube-insight-manifests.git
 cd kube-insight-manifests
-# TODO fix to include this in a nicer way (helm)
-cat ../prometheusConfMapAdd >> manifests/agents/metrics/templates/prometheus-configmap.yaml.j2
-helm template <Fix this dir> --name kube-insight --namespace metrics > ../kube-insight.yaml
+helm template charts/agents --name kube-insight-agent --namespace metrics --set istioScrape.enabled=true > ../kube-insight-agent.yaml
+helm template charts/servers --name kube-insight-server --namespace metrics > ../kube-insight-server.yaml
 
 cd ..
 
 # Deploy to kubernetes
 kubectl create namespace metrics
 kubectl apply -f istio.yaml
-kubectl apply -f kube-insight-yaml
+kubectl apply -f kube-insight-server.yaml
+kubectl apply -f kube-insight-agent.yaml
