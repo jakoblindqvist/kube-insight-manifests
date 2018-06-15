@@ -18,7 +18,7 @@ git clone https://github.com/jakoblindqvist/kube-insight-manifests.git
 cd kube-insight-manifests
 
 baseCommand="helm template agents --namespace metrics"
-if [ $1 -eq "istio" ]; then
+if [ $1 == "istio" ]; then
   extra="--set istioScrape.enabled=true"
 fi
 
