@@ -1,6 +1,4 @@
-namespace: metrics
-
-istioscrape:
+istioScrape:
   enabled: false
   namespace: metrics
 
