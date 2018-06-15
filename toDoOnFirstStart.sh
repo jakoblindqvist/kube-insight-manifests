@@ -16,7 +16,13 @@ cd ..
 # Get and generate kube-manifest-insight
 git clone https://github.com/jakoblindqvist/kube-insight-manifests.git
 cd kube-insight-manifests
-helm template agents --namespace metrics --set istioScrape.enabled=true > ../kube-learn-agent.yaml
+
+baseCommand="helm template agents --namespace metrics"
+if [ $1 -eq "istio" ]; then
+  extra="--set istioScrape.enabled=true"
+fi
+
+$baseCommand $extra > ./kube-learn-agent.yaml
 helm template servers --namespace metrics > ../kube-learn-server.yaml
 
 cd ..
