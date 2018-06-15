@@ -16,13 +16,13 @@ cd ..
 # Get and generate kube-manifest-insight
 git clone git@github.com:jakoblindqvist/kube-insight-manifests.git
 cd kube-insight-manifests
-helm template charts/agents --name kube-insight-agent --namespace metrics --set istioScrape.enabled=true > ../kube-insight-agent.yaml
-helm template charts/servers --name kube-insight-server --namespace metrics > ../kube-insight-server.yaml
+helm template charts/agents --namespace metrics --set istioScrape.enabled=true > ../kube-learn-agent.yaml
+helm template charts/servers --namespace metrics > ../kube-learn-server.yaml
 
 cd ..
 
 # Deploy to kubernetes
 kubectl create namespace metrics
 kubectl apply -f istio.yaml
-kubectl apply -f kube-insight-server.yaml
-kubectl apply -f kube-insight-agent.yaml
+kubectl apply -f kube-learn-server.yaml
+kubectl apply -f kube-learn-agent.yaml
