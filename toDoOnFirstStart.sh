@@ -16,6 +16,8 @@ cd ..
 # Get and generate kube-manifest-insight
 git clone git@github.com:jakoblindqvist/kube-insight-manifests.git
 cd kube-insight-manifests
+# TODO fix to include this in a nicer way (helm)
+cat ../prometheusConfMapAdd >> manifests/agents/metrics/templates/prometheus-configmap.yaml.j2
 helm template <Fix this dir> --name kube-insight --namespace metrics > ../kube-insight.yaml
 
 cd ..
