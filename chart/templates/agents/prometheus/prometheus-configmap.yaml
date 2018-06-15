@@ -247,7 +247,7 @@ data:
             source_labels: [__meta_kubernetes_pod_name]
             target_label: kubernetes_pod_name
 
-      {{- if .Values.istio-scrape.enabled }}
+      {{- if .Values.istioscrape.enabled }}
       - job_name: 'istio-mesh'
         # Override the global default and scrape targets from this job every 5 seconds.
         scrape_interval: 5s
@@ -258,7 +258,7 @@ data:
         relabel_configs:
         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
           action: keep
-          regex: {{ .Values.istio-scrape.namespace }};istio-telemetry;prometheus
+          regex: {{ .Values.istioscrape.namespace }};istio-telemetry;prometheus
 
       - job_name: 'envoy'
         # Override the global default and scrape targets from this job every 5 seconds.
@@ -272,7 +272,7 @@ data:
         relabel_configs:
         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
           action: keep
-          regex: {{ .Values.istio-scrape.namespace }};istio-statsd-prom-bridge;statsd-prom
+          regex: {{ .Values.istioscrape.namespace }};istio-statsd-prom-bridge;statsd-prom
 
       - job_name: 'istio-policy'
         # Override the global default and scrape targets from this job every 5 seconds.
@@ -286,7 +286,7 @@ data:
         relabel_configs:
         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
           action: keep
-          regex: {{ .Values.istio-scrape.namespace }};istio-policy;http-monitoring
+          regex: {{ .Values.istioscrape.namespace }};istio-policy;http-monitoring
 
       - job_name: 'istio-telemetry'
         # Override the global default and scrape targets from this job every 5 seconds.
@@ -300,7 +300,7 @@ data:
         relabel_configs:
         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
           action: keep
-          regex: {{ .Values.istio-scrape.namespace }};istio-telemetry;http-monitoring
+          regex: {{ .Values.istioscrape.namespace }};istio-telemetry;http-monitoring
 
       - job_name: 'pilot'
         # Override the global default and scrape targets from this job every 5 seconds.
@@ -314,5 +314,5 @@ data:
         relabel_configs:
         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
           action: keep
-          regex: {{ .Values.istio-scrape.namespace }};istio-pilot;http-monitoring
+          regex: {{ .Values.istioscrape.namespace }};istio-pilot;http-monitoring
       {{- end }}
