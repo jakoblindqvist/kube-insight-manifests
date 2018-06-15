@@ -1,0 +1,33 @@
+namespace: metrics
+
+cassandra:
+  version: '3.11'
+  image: cassandra
+  pullPolicy: IfNotPresent
+  replicas: 1
+  memLimitMB: 2048
+  memRequestMB: 1024
+  cpuLimitMilliCores: 200
+  cpuRequestMilliCores: 100
+
+kairosdb:
+  version: 1.2.1
+  image: elastisys/kairosdb
+  pullPolicy: IfNotPresent
+  replicas: 1
+  memLimitMB: 1024
+  memRequestMB: 512
+  cpuLimitMilliCores: 200
+  cpuRequestMilliCores: 100
+  cassandraReadConsistencyLevel: ONE
+  cassandraWriteConsistencyLevel: ONE
+
+prometheusKairosDBAdapter:
+  version: 0.0.3
+  image: proofpoint/prom-to-kairosdb
+  pullPolicy: IfNotPresent
+  replicas: 1
+  memLimitMB: 80
+  memRequestMB: 20
+  cpuLimitMilliCores: 200
+  cpuRequestMilliCores: 100
