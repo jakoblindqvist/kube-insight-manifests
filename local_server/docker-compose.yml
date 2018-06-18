@@ -1,0 +1,29 @@
+version: "3"
+services:
+
+  cassandra:
+    image: cassandra
+    ports:
+      - "9042:9042"
+
+  kairosdb:
+    image: elastisys/kairosdb:1.2.1
+    ports:
+      - "8080:8080"
+    environment:
+      - CASSANDRA_HOSTS=localhost
+      - CASSANDRA_PORT=9042
+    network_mode: host
+    depends_on:
+      - cassandra
+
+  prom-to-kairosdb:
+    image: proofpoint/prom-to-kairosdb:0.0.3
+    command: --config=/etc/prometheus-kairosdb-adapter/config.yml
+    ports:
+      - "9201:9201"
+    volumes:
+      - ".:/etc/prometheus-kairosdb-adapter/"
+    depends_on:
+      - kairosdb
+    network_mode: host
