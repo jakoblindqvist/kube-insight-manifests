@@ -1,2 +1,7 @@
 *~
+
+# docker database volume
+**/data/**
+
+# vim swap
 **/*.swp
