@@ -5,6 +5,8 @@ services:
     image: cassandra
     ports:
       - "9042:9042"
+    volumes:
+      - "./data:/var/lib/cassandra/"
 
   kairosdb:
     image: elastisys/kairosdb:1.2.1
