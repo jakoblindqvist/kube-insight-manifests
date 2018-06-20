@@ -250,7 +250,7 @@ data:
       {{- if .Values.istioScrape.enabled }}
       - job_name: 'istio-mesh'
         # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: 5s
+        scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
 
         kubernetes_sd_configs:
         - role: endpoints
@@ -262,7 +262,7 @@ data:
 
       - job_name: 'envoy'
         # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: 5s
+        scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
         # metrics_path defaults to '/metrics'
         # scheme defaults to 'http'.
 
@@ -276,7 +276,7 @@ data:
 
       - job_name: 'istio-policy'
         # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: 5s
+        scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
         # metrics_path defaults to '/metrics'
         # scheme defaults to 'http'.
 
@@ -290,7 +290,7 @@ data:
 
       - job_name: 'istio-telemetry'
         # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: 5s
+        scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
         # metrics_path defaults to '/metrics'
         # scheme defaults to 'http'.
 
@@ -304,7 +304,7 @@ data:
 
       - job_name: 'pilot'
         # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: 5s
+        scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
         # metrics_path defaults to '/metrics'
         # scheme defaults to 'http'.
 

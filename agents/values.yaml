@@ -3,6 +3,7 @@ namespace: metrics
 istioScrape:
   enabled: false
   namespace: metrics
+  scrapeInterval: 20s
 
 kubeStateMetrics:
   version: v1.3.1
