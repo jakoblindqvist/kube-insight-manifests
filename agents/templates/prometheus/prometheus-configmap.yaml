@@ -73,69 +73,69 @@ data:
 
 
       # scrape configuration for kube-state-metrics.
-      - job_name: kube-state-metrics
-        kubernetes_sd_configs:
-        - role: endpoints
-        scheme: http
-        # filter out endpoints such that we only keep the http endpoint for the kube-state-metrics endpoint(s).
-        relabel_configs:
-          - action: keep
-            source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-            regex: {{ .Values.namespace }};kube-state-metrics;http
+      #- job_name: kube-state-metrics
+      #  kubernetes_sd_configs:
+      #  - role: endpoints
+      #  scheme: http
+      #  # filter out endpoints such that we only keep the http endpoint for the kube-state-metrics endpoint(s).
+      #  relabel_configs:
+      #    - action: keep
+      #      source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+      #      regex: {{ .Values.namespace }};kube-state-metrics;http
 
 
       # scrape config for kubelet /metrics.
-      - job_name: kubelets
-        kubernetes_sd_configs:
-        - role: node
-        scheme: https
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      #- job_name: kubelets
+      #  kubernetes_sd_configs:
+      #  - role: node
+      #  scheme: https
+      #  tls_config:
+      #    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      #  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
         # rewrite label set before scraping, allowing us to use set the
         # scrape destination to a given kubelet, whose /metrics endpoint we
         # query via the apiserver.
-        relabel_configs:
-          # save all labels picked up from the node as metric labels
-          - action: labelmap
-            regex: __meta_kubernetes_node_label_(.+)
-          # set the scrape address to apiserver
-          - action: replace
-            target_label: __address__
-            replacement: kubernetes.default.svc:443
-          # set scrape path to that of a particular node's kubelet /metrics
-          - action: replace
-            source_labels: [__meta_kubernetes_node_name]
-            regex: (.+)
-            target_label: __metrics_path__
-            replacement: /api/v1/nodes/${1}/proxy/metrics
+      #  relabel_configs:
+      #    # save all labels picked up from the node as metric labels
+      #    - action: labelmap
+      #      regex: __meta_kubernetes_node_label_(.+)
+      #    # set the scrape address to apiserver
+      #    - action: replace
+      #      target_label: __address__
+      #      replacement: kubernetes.default.svc:443
+      #    # set scrape path to that of a particular node's kubelet /metrics
+      #    - action: replace
+      #      source_labels: [__meta_kubernetes_node_name]
+      #      regex: (.+)
+      #      target_label: __metrics_path__
+      #      replacement: /api/v1/nodes/${1}/proxy/metrics
 
 
       # scrape config for kubelet /metrics/cadvisor.
-      - job_name: kubelets-cadvisor
-        kubernetes_sd_configs:
-        - role: node
-        scheme: https
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-        # rewrite label set before scraping, allowing us to use set the
-        # scrape destination to a given kubelet, whose /metrics endpoint we
-        # query via the apiserver.
-        relabel_configs:
-          # save all labels picked up from the node as metric labels
-          - action: labelmap
-            regex: __meta_kubernetes_node_label_(.+)
-          # set the scrape address to apiserver
-          - action: replace
-            target_label: __address__
-            replacement: kubernetes.default.svc:443
-          # set scrape path to that of a particular node's kubelet /metrics
-          - action: replace
-            source_labels: [__meta_kubernetes_node_name]
-            regex: (.+)
-            target_label: __metrics_path__
-            replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+      #- job_name: kubelets-cadvisor
+      #  kubernetes_sd_configs:
+      #  - role: node
+      #  scheme: https
+      #  tls_config:
+      #    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      #  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      #  # rewrite label set before scraping, allowing us to use set the
+      #  # scrape destination to a given kubelet, whose /metrics endpoint we
+      #  # query via the apiserver.
+      #  relabel_configs:
+      #    # save all labels picked up from the node as metric labels
+      #    - action: labelmap
+      #      regex: __meta_kubernetes_node_label_(.+)
+      #    # set the scrape address to apiserver
+      #    - action: replace
+      #      target_label: __address__
+      #      replacement: kubernetes.default.svc:443
+      #    # set scrape path to that of a particular node's kubelet /metrics
+      #    - action: replace
+      #      source_labels: [__meta_kubernetes_node_name]
+      #      regex: (.+)
+      #      target_label: __metrics_path__
+      #      replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
 
 
       # Scrape config for API servers.
@@ -144,20 +144,20 @@ data:
       # the endpoints associated with the default/kubernetes service using the
       # default named port `https`. This works for single API server deployments as
       # well as HA API server deployments.
-      - job_name: apiservers
-        kubernetes_sd_configs:
-        - role: endpoints
-        scheme: https
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-        # Keep only the default/kubernetes service endpoints for the https port. This
-        # will add targets for each API server which Kubernetes adds an endpoint to
-        # the default/kubernetes service.
-        relabel_configs:
-          - action: keep
-            source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-            regex: default;kubernetes;https
+      #- job_name: apiservers
+      #  kubernetes_sd_configs:
+      #  - role: endpoints
+      #  scheme: https
+      #  tls_config:
+      #    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      #  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      #  # Keep only the default/kubernetes service endpoints for the https port. This
+      #  # will add targets for each API server which Kubernetes adds an endpoint to
+      #  # the default/kubernetes service.
+      #  relabel_configs:
+      #    - action: keep
+      #      source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+      #      regex: default;kubernetes;https
 
 
       # Scrape config for service endpoints for services with a `prometheus.io/scrape`
@@ -274,45 +274,45 @@ data:
           action: keep
           regex: {{ .Values.istioScrape.namespace }};istio-statsd-prom-bridge;statsd-prom
 
-      - job_name: 'istio-policy'
-        # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
-        # metrics_path defaults to '/metrics'
-        # scheme defaults to 'http'.
+      #- job_name: 'istio-policy'
+      #  # Override the global default and scrape targets from this job every 5 seconds.
+      #  scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
+      #  # metrics_path defaults to '/metrics'
+      #  # scheme defaults to 'http'.
 
-        kubernetes_sd_configs:
-        - role: endpoints
+      #  kubernetes_sd_configs:
+      #  - role: endpoints
 
-        relabel_configs:
-        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-          action: keep
-          regex: {{ .Values.istioScrape.namespace }};istio-policy;http-monitoring
+      #  relabel_configs:
+      #  - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+      #    action: keep
+      #    regex: {{ .Values.istioScrape.namespace }};istio-policy;http-monitoring
 
-      - job_name: 'istio-telemetry'
-        # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
-        # metrics_path defaults to '/metrics'
-        # scheme defaults to 'http'.
+      #- job_name: 'istio-telemetry'
+      #  # Override the global default and scrape targets from this job every 5 seconds.
+      #  scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
+      #  # metrics_path defaults to '/metrics'
+      #  # scheme defaults to 'http'.
 
-        kubernetes_sd_configs:
-        - role: endpoints
+      #  kubernetes_sd_configs:
+      #  - role: endpoints
 
-        relabel_configs:
-        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-          action: keep
-          regex: {{ .Values.istioScrape.namespace }};istio-telemetry;http-monitoring
+      #  relabel_configs:
+      #  - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+      #    action: keep
+      #    regex: {{ .Values.istioScrape.namespace }};istio-telemetry;http-monitoring
 
-      - job_name: 'pilot'
-        # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
-        # metrics_path defaults to '/metrics'
-        # scheme defaults to 'http'.
+      #- job_name: 'pilot'
+      #  # Override the global default and scrape targets from this job every 5 seconds.
+      #  scrape_interval: {{ .Values.istioScrape.scrapeInterval }}
+      #  # metrics_path defaults to '/metrics'
+      #  # scheme defaults to 'http'.
 
-        kubernetes_sd_configs:
-        - role: endpoints
+      #  kubernetes_sd_configs:
+      #  - role: endpoints
 
-        relabel_configs:
-        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-          action: keep
-          regex: {{ .Values.istioScrape.namespace }};istio-pilot;http-monitoring
+      #  relabel_configs:
+      #  - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+      #    action: keep
+      #    regex: {{ .Values.istioScrape.namespace }};istio-pilot;http-monitoring
       {{- end }}

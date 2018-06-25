@@ -8,7 +8,7 @@ kubectl create ns metrics
 set -e
 
 if [[ $1 == "istio" ]]; then
-  # curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.8.0 sh -
+  curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.8.0 sh -
   extra="--set istioScrape.enabled=true"
   helm install istio-0.8.0/install/kubernetes/helm/istio --name istio --namespace metrics --set prometheus.enabled=false
 fi
