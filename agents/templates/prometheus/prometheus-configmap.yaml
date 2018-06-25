@@ -15,6 +15,14 @@ data:
         rules:
           - record: node_cpu_norm
             expr: sum(rate(node_cpu{mode!="idle"}[1m])) by (instance) / count(count(node_cpu) without (mode)) by (instance)
+      - name: node_percent_mem_free
+        rules:
+          - record: node_percent_mem_free
+            expr: sum((node_memory_MemTotal - node_memory_MemFree) / node_memory_MemTotal) by (instance)
+      - name: cluster_percent_5xx
+        rules:
+          - record: cluster_percent_5xx
+            expr: rate(envoy_http_http_downstream_rq_5xx[1m]) / rate(envoy_http_http_rq_total[1m])
 
   prometheus.yml: |
     global:
