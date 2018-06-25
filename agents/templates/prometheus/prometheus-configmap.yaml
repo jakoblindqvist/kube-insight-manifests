@@ -9,6 +9,13 @@ metadata:
   labels:
     app: prometheus
 data:
+  prometheus-rules.rules: |
+    groups:
+      - name: node_cpu_norm
+        rules:
+          - record: node_cpu_norm
+            expr: sum(rate(node_cpu{mode!="idle"}[1m])) by (instance) / count(count(node_cpu) without (mode)) by (instance)
+
   prometheus.yml: |
     global:
       ## How frequently to scrape targets by default
@@ -22,7 +29,7 @@ data:
       evaluation_interval: 1m
 
     rule_files:
-      - "/etc/prometheus-rules/*.rules"
+      - "/etc/config/*.rules"
 
     {{- if .Values.prometheus.remoteWriteURL }}
     # set up a remote write endpoint to which all scraped targets will be
