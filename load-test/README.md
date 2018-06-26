@@ -1,11 +1,11 @@
 # Load test
 
-Simulates traffic on the sock shop demo
+Simulates traffic on the sock shop demo, creates a output folder where logs and labels are saved
 
 
 ## Run
 
-Can be built and run with following command: `sudo docker build -t local/load-test . && sudo docker run --net=host local/load-test -i <ip>:<port>`. If the image is built and no changes are made to the code it can be started with: `sudo docker run --net=host local/load-test -i <ip>:<port>`
+Can be built and run with following command: `sudo docker build -t local/load-test . && sudo docker run -v ${PWD}/output:/output --net=host local/load-test -i <ip>:<port>`. If the image is built and no changes are made to the code it can be started with: `sudo docker run -v ${PWD}/output:/output --net=host local/load-test -i <ip>:<port>`
 
 For help run `sudo docker run --net=host local/load-test -h`
 
