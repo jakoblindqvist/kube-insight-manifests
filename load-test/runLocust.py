@@ -31,7 +31,7 @@ LABEL_FILE_TYPE = "labels"
 def usage():
     print("Usage: python " + sys.argv[0] + " ")
     print("    -i --host: Ip-address to the webpage (required)")
-    print("    -t --tests: How many tests that will be executed. default: 10")
+    print("    -t --tests: How many tests that will be executed (-1 will make it run infinitely). default: 10")
     print("    -f --config-file: Location to an external config file")
     print("    -l --locust-file: Location to an external locust task file")
     print("    -h --help: Displays this text")
@@ -64,6 +64,7 @@ def get_next_state():
   Writes the object label to /outout/<label_name>
 """
 def writeResult(label_name, label):
+  print "Exit time: ", int(datetime.now().strftime("%s"))
   with open("/output/" + label_name, "w") as file:
     print >> file, label
 
@@ -71,7 +72,9 @@ def writeResult(label_name, label):
   Executes tests
 """
 def runTests(tests, label_name, label, log_name):
-  for _ in range(tests):
+  i = 0
+  while i != int(tests):
+    i += 1
     level, test_config = get_next_state()
     time = datetime.now()
     intTime = int(time.strftime("%s"))
@@ -127,6 +130,7 @@ if __name__ == '__main__':
     try:
       print >> sys.stderr, "Interrupt detected, Saving data to file"
       writeResult(label_name, label)
+      sys.stdout.flush()
       sys.exit(0)
     except SystemExit:
       os._exit(0)
