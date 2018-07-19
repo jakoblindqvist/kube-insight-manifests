@@ -26,3 +26,4 @@ The metrics scraped by prometheus include:
 * [Istio](https://istio.io/docs/reference/config/policy-and-telemetry/metrics/)
 * [Node exporter](https://github.com/prometheus/node_exporter)
 * [cAdvisor](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)
+* [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics/tree/master/Documentation)
