@@ -17,3 +17,12 @@ Alternatively just run
 To add a namespace to the istios autoinjection simply add the label `istio-injection` to the namespace via the command `kubectl label namespace <namepace to add> istio-injection=enabled`
 
 Then restart all pods in that namespace to inject the sidecart and then you're configured.
+
+## Metrics
+
+Several systems are used for monitoring and each of these produce a set of metrics.
+The metrics scraped by prometheus include:
+
+* [Istio](https://istio.io/docs/reference/config/policy-and-telemetry/metrics/)
+* [Node exporter](https://github.com/prometheus/node_exporter)
+* [cAdvisor](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)
