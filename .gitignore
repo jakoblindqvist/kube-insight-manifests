@@ -5,3 +5,9 @@
 
 # vim swap
 **/*.swp
+
+# output folders
+**/output/**
+
+# python
+**/*.pyc
