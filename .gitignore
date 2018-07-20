@@ -11,3 +11,7 @@
 
 # python
 **/*.pyc
+
+# load-scheduler
+**/load-scheduler/config.json
+**/load-scheduler/sched/**
