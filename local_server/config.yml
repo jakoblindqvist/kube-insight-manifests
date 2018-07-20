@@ -1,9 +1,0 @@
-kairosdb-url: "http://localhost:8080"
-timeout: "10s"
-dryrun: false
-server:
-  port: ':9201'
-  metrics_relabel_configs:
-    - source_labels: [ 'job' ]
-      regex: '^prometheus\-.*'
-      action: 'drop'
