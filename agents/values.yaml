@@ -43,4 +43,4 @@ prometheus:
   scrapeInterval: 20s
   evaluation_Interval: 30s
   cpuRequestMilliCores: 100
-  remoteWriteURL: http://192.168.104.186:8086/api/v1/prom/write?u=prom&p=prom&db=prometheus
+  remoteWriteURL: http://127.0.0.1:8086/api/v1/prom/write?u=prom&p=prom&db=prometheus
